@@ -19,7 +19,7 @@ function loadHtml(id, filename){
         xhttp.open("GET", `public/${file}`, true);
         xhttp.send();
 
-        loadJS("./assets/viacep.js", true);
+        loadJS("js/viacep.js", true);
 
         return;
     }
