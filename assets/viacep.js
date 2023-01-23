@@ -1,4 +1,4 @@
-'use strict';
+console.log("viacep.js");
 
 const limparFormulario = () => {
     document.getElementById("formulario").reset();
@@ -24,6 +24,8 @@ const cepValido = (cep) => cep.length == 8 && eNumero(cep);
 const pesquisarCep = async() => {
     
     const cep = document.getElementById('cep').value;
+
+    console.log(cep);
 
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     if ( cepValido(cep)){
