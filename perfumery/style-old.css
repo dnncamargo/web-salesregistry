@@ -1,0 +1,33 @@
+/*---------------------------------------*\
+        Propriedades customizadas
+\*---------------------------------------*/
+:root {
+        font-family: sans-serif;
+}
+
+* {
+        margin: 0;
+        box-sizing: border-box;
+}
+
+#section-form {
+    margin-top: 50px;
+}
+
+
+
+/*---------------------------------------*\
+                Variáveis do Tema
+\*---------------------------------------*/
+
+.dark-theme {
+        --page-background-color: #252526;
+        --header-background-color: #272828;
+        --text-color-contrast: #f5f7ff;
+}
+.light-theme {
+        --page-background-color: #e3e3e3;
+        --header-background-color: #a9a9a9;
+        --text-color-contrast: #0a141e;
+}
+
