@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+/* base styles */
+* {
+    margin: 0;
+    font-family: "Quicksand";
+    color: #333;
+  }
+
+.App {
+  text-align: center;
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+
+#navbar-brand {
+    align-self: center;
+}
+
+.fa-bars {
+    color: white;
+}
+
+.container {
+    max-width: 500px;
+    margin: 80px auto;
+    text-align: center;
+}
+
+form label {
+    text-align: left;
+    display: block;
+}
+
+form input, .form select {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: block;
+}
+form button {
+    background: #f1356d;
+    color: #fff;
+    border: 0;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}

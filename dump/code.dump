@@ -1,0 +1,49 @@
+                <label>CPF</label>
+                <input 
+                    type="number"
+                    maxLength="11"
+                    required />
+                <label>CEP</label>
+                <input 
+                    type="number"
+                    maxLength="8" />
+                <label>Endereço</label>
+                <input 
+                    type="text"
+                    maxLength="100" />
+                <label>Número</label>
+                <input 
+                    type="text"
+                    maxLength="10"
+                    />
+                <label>Complemento</label>
+                <input 
+                    type="text"
+                    maxLength="50" />
+                <label>Bairro</label>
+                <input 
+                    type="text"
+                    maxLength="50" />
+                <label>UF</label>
+                <input 
+                    type="text"
+                    maxLength="2" />
+
+
+                    //navbar search
+
+                    <form class="d-flex input-group w-auto">
+                <input
+                type="search"
+                class="form-control"
+                placeholder="Type query"
+                aria-label="Search"
+                />
+                <button
+                class="btn btn-outline-primary"
+                type="button"
+                data-mdb-ripple-color="dark"
+                >
+                Pesquisar
+                </button>
+            </form>
