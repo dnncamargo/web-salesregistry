@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Article01 from './components/Article01';
 import Article02 from './components/Article02';
 import Client from './components/Client';
+import Config from './components/Config';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                     <Route path='/Create' element={<Create/>} />
                     <Route path='/Article01' element={<Article01/>} />
                     <Route path='/Article02' element={<Article02/>} />
+                    <Route path='/Config' element={<Config/>} />
                 </Routes>
             </Router>
 

@@ -10,10 +10,13 @@ app.get('/create', (req, res) => {
 })
 
 const dbop = require('./utils/dbop');
-dbop.getClients()
-.then(res => {
-    console.log(res.recordset)
-})
+
+dbop.firstConfig();
+
+// dbop.getClients()
+// .then(res => {
+//     console.log(res.recordset)
+// })
 
 app.listen(API_PORT, () => {
     console.log(`Server started on port ${API_PORT}`);

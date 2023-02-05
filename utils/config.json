@@ -1,0 +1,9 @@
+{
+    "SERVER_URL": "BRRJDACAMARGO",
+    "INSTANCE_NAME": "MSSQLSERVER",
+    "DATABASE_NAME": "salestalliondb",
+    "USERNAME": "nodejs",
+    "PASSWORD": "nodejs",
+    "PORT": "1433"
+
+}
