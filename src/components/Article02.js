@@ -71,6 +71,7 @@ const Article02 = () => {
             }}
             placeholder="onBlur is triggered when you click this input and then you click outside of it."
             />
+        
     </div> );
 }
  
