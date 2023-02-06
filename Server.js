@@ -10,6 +10,23 @@ app.use(bp.urlencoded({ extended: true }));
 
 //dbop.firstConfig();
 
+const client = {
+    nomecompleto: 'Márcia Mariane Galvão',
+    cpf: '76197879760',
+    cep: '24936255',
+    logradouro: 'Rua Seis',
+    numero: '419',
+    complemento: '',
+    bairro: 'Barroco (Itaipuaçu)',
+    localidade: 'Maricá',
+    uf: 'RJ',
+    email: 'mmgalvao',
+    telefone: '22993857721',
+    nascimento: '09/12/1985'
+    }
+
+dbop.insertClient(client)
+
 app.post('/create', async (req, res) => {
     console.log("received from front:", req.body);
     await dbop.insertClient(req.body);

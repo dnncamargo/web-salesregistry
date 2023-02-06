@@ -1,6 +1,5 @@
 const config = require('./dbconf'),
-         sql = require('mssql/msnodesqlv8'),
-         os = require("os");
+         sql = require('mssql/msnodesqlv8')
 
 /**
  * Conecta-se ao banco de dados
@@ -51,7 +50,7 @@ const insertClient = async (client) => {
                 '${client.email}'),
                 '${client.telefone}'),
                 '${client.nascimento}'),
-                1`
+                true`
         )
         return clients;
     } catch (error) {
@@ -60,21 +59,13 @@ const insertClient = async (client) => {
 }
 
 const firstConfig = async () => {
-    const hostname = os.hostname();
+    
     // const query = `IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'MyTestDataBase')
     // BEGIN
     //   CREATE DATABASE MyTestDataBase;
     // END;`;
 
-    let pool = sql.connect({
-        server: `${hostname}\\SQLEXPRESS`,
-        port: 1433,
-        database: 'master',
-        driver: "msnodesqlv8",
-        options: {
-            trustedConnection: true
-        }
-    }, async() => {
+    let pool = sql.connect(config, async() => {
     try {
         console.log("Connected to database")
         // let request = await pool.request().query(query)

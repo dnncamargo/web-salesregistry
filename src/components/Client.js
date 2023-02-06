@@ -1,7 +1,8 @@
 import React, {useState, useRef} from 'react';
 
 const Client = () => {
-    const {inputRefNumber, formRef} = useRef(null);
+    const formRef = useRef(null);
+    const inputRefNumber = useRef(null);
     const [returnedData, setReturnedData] = useState('');
     const [client, setClient] = useState({
         nomecompleto: '',
