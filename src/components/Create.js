@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 
@@ -19,10 +19,6 @@ const Create = () => {
         setCepInput(cep)
     };
     
-    useEffect = (() => {
-        console.log(cepInput);
-    })
-        
 
     return ( 
         <form className="container">

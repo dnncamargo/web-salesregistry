@@ -1,18 +1,22 @@
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';
 
 const Client = () => {
 
-    const [fullNameInput, setFullnameInput] = useState('');
-    const [cpfIDInput, setCPFIDInput] = useState('');
-    const [cepInput, setCepInput] = useState('');
-    const [AddressInput, setAddressInput] = useState('');
-    const [NumberInput, setNumberInput] = useState('');
-    const [ComplementInput, setComplementInput] = useState('');
-    const [DistrictInput, setDistrictInput] = useState('');
-    const [cityInput, setCityInput] = useState('');
-    const [StateInput, setStateInput] = useState('');
-    const [returnedData, setReturnedData] = useState();
+    const [returnedData, setReturnedData] = useState('');
+    const [client, setClient] = useState({
+        nomecompleto: '',
+        cpf: '',
+        cep: '',
+        numero: '',
+        logradouro: '',
+        complemento: '',
+        bairro: '',
+        localidade: '',
+        uf: '',
+        email: '',
+        telefone: '',
+        nascimento: ''
+        })
 
     const model = {
         name: "",
@@ -25,37 +29,25 @@ const Client = () => {
         state: undefined
     }
     
-
-        // {cep:"", logradouro:"", complemento:"", bairro:"", localidade:"", uf:"", ibge:"", gia:"", ddd:"", siafi:""}
-        const [client, setClient] = useState({
-            fullname: '',
-            cpfID: '',
-            cepCode: '',
-            address: '',
-            number: '',
-            complement: '',
-            district: '',
-            state: ''
-            });
-
     const saveContent = () => {
         console.log("Saved")
     }
 
     const fillForm = (data) => {
-        setAddressInput(data.logradouro)
-        setComplementInput(data.complemento)
-        setDistrictInput(data.bairro)
-        setCityInput(data.localidade)
-        setStateInput(data.uf)
+        console.log(data);
+        const {name, value} = data;
+        setClient(prevState => ({
+            ...prevState,
+            [name] : value
+        }))
     }
 
     const clrForm = () => {
-        setAddressInput("")
-        setComplementInput("")
-        setDistrictInput("")
-        setCityInput("")
-        setStateInput("")
+        // setAddressInput("")
+        // setComplementInput("")
+        // setDistrictInput("")
+        // setCityInput("")
+        // setStateInput("")
         console.log("Formulário limpo");
     }
 
@@ -70,13 +62,19 @@ const Client = () => {
         if ( validCepCode(cepCode)) {
             const url = `https://viacep.com.br/ws/${cepCode}/json/`;
             const cepResponse = await fetch(url)
-            const cepJson = await cepResponse.json();
+            const data = await cepResponse.json();
 
             /** validação do input */
-            if(cepJson.hasOwnProperty('erro')){
+            if(data.hasOwnProperty('erro')){
                 alert("CEP não encontrado!")
             } else {
-                fillForm(cepJson);
+                console.log(data);
+                setClient(prevState => ({
+                    ...prevState,
+                    cep : cepCode
+                }))
+                fillForm(data);
+                console.log(client)
             }
         } else {
             if (cepCode.length === 0){
@@ -93,8 +91,9 @@ const Client = () => {
         <div className="container">
             <form className="FormInput">
                 <h2>Novo Cliente</h2>
-
-                <input type={"text"} placeholder="CEP" maxLength={8}
+                <input type={"text"} name="nomecompleto" placeholder="Nome Completo" maxLength={255}></input>
+                <input type={"text"} name="cpf" placeholder="CPF" maxLength={11}></input>
+                <input type={"text"} name="cep" placeholder="CEP" maxLength={8}
                     onBlur={inputCEP}></input>
                     
                     <button disabled
@@ -103,15 +102,16 @@ const Client = () => {
                     </button>
                     
 
-                    <h2>Message: {returnedData}</h2>
-                    <input className='form-control' defaultValue={AddressInput} placeholder="Endereço" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={ComplementInput} placeholder="Complemento" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={DistrictInput} placeholder="Bairro" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={cityInput} placeholder="Cidade" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={StateInput} placeholder="UF" type='text' maxLength={50}/>
+                    {/* <h2>Message: {returnedData}</h2> */}
+                    <input className='form-control' name="logradouro" defaultValue={client.logradouro} placeholder="Endereço" type='text' maxLength={50}/>
+                    <input className='form-control' name="complemento" defaultValue={client.complemento} placeholder="Complemento" type='text' maxLength={50}/>
+                    <input className='form-control' name="bairro" defaultValue={client.bairro} placeholder="Bairro" type='text' maxLength={50}/>
+                    <input className='form-control' name="localidade" defaultValue={client.localidade} placeholder="Cidade" type='text' maxLength={50}/>
+                    <input className='form-control' name="uf" defaultValue={client.uf} placeholder="UF" type='text' maxLength={50}/>
                     
 
             </form>
+            {/* <p>{client}</p> */}
         </div>
      );
 }
