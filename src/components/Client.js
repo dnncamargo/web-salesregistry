@@ -1,69 +1,37 @@
-import { useState, useEffect } from 'react';
-
+import React, {useState, useRef} from 'react';
 
 const Client = () => {
+    const inputRefNumber = useRef(null);
+    const [returnedData, setReturnedData] = useState('');
+    const [client, setClient] = useState({
+        nomecompleto: '',
+        cpf: '',
+        cep: '',
+        logradouro: '',
+        numero: '',
+        complemento: '',
+        localidade: '',
+        uf: '',
+        bairro: ''
+        });
 
-    const [fullNameInput, setFullnameInput] = useState('');
-    const [cpfIDInput, setCPFIDInput] = useState('');
-    const [cepInput, setCepInput] = useState('');
-    const [AddressInput, setAddressInput] = useState('');
-    const [NumberInput, setNumberInput] = useState('');
-    const [ComplementInput, setComplementInput] = useState('');
-    const [DistrictInput, setDistrictInput] = useState('');
-    const [cityInput, setCityInput] = useState('');
-    const [StateInput, setStateInput] = useState('');
-    const [returnedData, setReturnedData] = useState();
-
-    const model = {
-        name: "",
-        cpfid: undefined,
-        cepCode: undefined,
-        address: undefined,
-        number: undefined,
-        complement: undefined,
-        district: undefined,
-        state: undefined
+    const setInput = (c) => {
+        const {name, value} = c.target;
+        //console.log(value);
+        // Filtragem de tipo: 'name' deve corresponder ao campo da tabela
+        setClient(prevState => ({
+            ...prevState,
+            [name] : value
+            /** os demais campos receberão o valor de string normalmente */
+        }));
+        
     }
-    
-
-        // {cep:"", logradouro:"", complemento:"", bairro:"", localidade:"", uf:"", ibge:"", gia:"", ddd:"", siafi:""}
-        const [client, setClient] = useState({
-            fullname: '',
-            cpfID: '',
-            cepCode: '',
-            address: '',
-            number: '',
-            complement: '',
-            district: '',
-            state: ''
-            });
-
-    const saveContent = () => {
-        console.log("Saved")
-    }
-
-    const fillForm = (data) => {
-        setAddressInput(data.logradouro)
-        setComplementInput(data.complemento)
-        setDistrictInput(data.bairro)
-        setCityInput(data.localidade)
-        setStateInput(data.uf)
-    }
-
-    const clrForm = () => {
-        setAddressInput("")
-        setComplementInput("")
-        setDistrictInput("")
-        setCityInput("")
-        setStateInput("")
-        console.log("Formulário limpo");
-    }
-
     const validCepCode = (cep) => cep.length === 8 && /^[0-9]+$/.test(cep); 
 
     /** TODO: Validar CEP */
-    const inputCEP = async (e) => {
+    const setInputCEP = async (e) => {
         let cepCode = e.target.value;
+        //console.log(cepCode)
         //alert(newValue);
         //setCepInput(newValue);
 
@@ -76,44 +44,125 @@ const Client = () => {
             if(cepJson.hasOwnProperty('erro')){
                 alert("CEP não encontrado!")
             } else {
+                setClient(prevState => ({
+                    ...prevState,
+                    cep : cepCode
+                }))}
                 fillForm(cepJson);
-            }
+            
         } else {
             if (cepCode.length === 0){
-                clrForm();
+                //clrForm();
             } else {
                 alert("CEP incorreto!");
             }
         }
-            //.then(data => setReturnedData(data));
-        //setCepInput(cepResponse[0]);
-    }  
+    }
 
-    return ( 
-        <div className="container">
-            <form className="FormInput">
-                <h2>Novo Cliente</h2>
+    const fillForm = (data) => {
+        /** Preenche os campos do formulário */
 
-                <input type={"text"} placeholder="CEP" maxLength={8}
-                    onBlur={inputCEP}></input>
-                    
-                    <button disabled
-                    onClick={saveContent}>
-                        Salvar
-                    </button>
-                    
+        setClient(prevState => ({
+            ...prevState,
+            logradouro : data.logradouro,
+            complemento : data.complemento,
+            bairro : data.bairro,
+            localidade : data.localidade,
+            uf : data.uf
+        }))
+        inputRefNumber.current.focus();
+    }
+ 
+    
+    const createClient = async() => {
+        console.log("novo cliente", client);
+        await fetch('/create', {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                ...client
+            })
+        })
+        .then(res => res.json());
+        setReturnedData(client);       
+        //console.log(newData);
+    }
+    
 
-                    <h2>Message: {returnedData}</h2>
-                    <input className='form-control' defaultValue={AddressInput} placeholder="Endereço" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={ComplementInput} placeholder="Complemento" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={DistrictInput} placeholder="Bairro" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={cityInput} placeholder="Cidade" type='text' maxLength={50}/>
-                    <input className='form-control' defaultValue={StateInput} placeholder="UF" type='text' maxLength={50}/>
-                    
+    return (
+        <div className='container'>
 
-            </form>
+            <input 
+                name="nomecompleto" 
+                placeholder="Nome Completo" 
+                defaultValue={client.nomecompleto} 
+                onChange={setInput}></input>
+            <input 
+                name="cpf" 
+                placeholder="CPF"
+                defaultValue={client.cpf}
+                onChange={setInput}></input>
+            <input 
+                name="cep" 
+                placeholder="CEP" 
+                defaultValue={client.cep}
+                onBlur={setInputCEP}></input>
+            <input 
+                name="logradouro" 
+                placeholder="Endereço" 
+                defaultValue={client.logradouro} 
+                onChange={setInput}></input> 
+            <input 
+                name="numero" 
+                placeholder="Número" 
+                defaultValue={client.numero} 
+                onChange={setInput}
+                ref={inputRefNumber}></input> 
+            <input 
+                name="complemento" 
+                placeholder="Complemento" 
+                defaultValue={client.complemento} 
+                onChange={setInput}></input> 
+            <input 
+                name="bairro" 
+                placeholder="Bairro" 
+                defaultValue={client.bairro} 
+                onChange={setInput}></input>  
+            <input 
+                name="localidade" 
+                placeholder="Cidade" 
+                defaultValue={client.localidade} 
+                onChange={setInput}></input>
+            <input 
+                name="uf" 
+                placeholder="Estado" 
+                defaultValue={client.uf} 
+                onChange={setInput}></input>
+
+            <button onClick={ 
+                () => createClient() }>
+                Salvar
+            </button>
+            {/* <button onClick={ 
+                () => fetchData() }>
+                Buscar
+            </button> */}
+            
+            
+            <p>Nome Completo : {returnedData.nomecompleto}</p>
+            <p>CPF : {returnedData.cpf}</p>
+            <p>CEP : {returnedData.cep}</p>
+            <p>Endereço : {returnedData.logradouro}</p>
+            <p>Número : {returnedData.numero}</p>
+            <p>Bairro : {returnedData.bairro}</p>
+            <p>Cidade : {returnedData.localidade}</p>
+            <p>Estado : {returnedData.uf}</p>
+
         </div>
-     );
+    )
 }
  
 export default Client;

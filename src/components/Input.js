@@ -1,14 +1,14 @@
-const Input = ({label, type, maxlen, value, req}) => {
+const Input = ({placeholder, maxlen, value, req}) => {
 
     return ( <div>
-        <label> {label} </label>
         <input className='form-control'
-            type={type} 
+            type="text"
+            placeholder={placeholder}
             maxLength={maxlen}
             required={req}
 
             /** O valor do campo também é enviado por props*/
-            value={value}>
+            defaultValue={value}>
         </input>
     </div> );
 }

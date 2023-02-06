@@ -3,6 +3,11 @@ import {useState} from 'react'
 const Article02 = () => {
 
     const [title, setTitle] = useState("Zelda");
+    const [person, setPerson] = useState({
+            fullname: '',
+            id: '',
+            zip: ''
+    })
 
     const changeTitle = () => {
         setTitle("Sheik");
@@ -71,6 +76,11 @@ const Article02 = () => {
             }}
             placeholder="onBlur is triggered when you click this input and then you click outside of it."
             />
+        <h2>SetState and Object with Keys</h2>
+
+        <br/>
+        <input />
+
     </div> );
 }
  

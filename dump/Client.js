@@ -1,56 +1,5 @@
-                <label>CPF</label>
-                <input 
-                    type="number"
-                    maxLength="11"
-                    required />
-                <label>CEP</label>
-                <input 
-                    type="number"
-                    maxLength="8" />
-                <label>Endereço</label>
-                <input 
-                    type="text"
-                    maxLength="100" />
-                <label>Número</label>
-                <input 
-                    type="text"
-                    maxLength="10"
-                    />
-                <label>Complemento</label>
-                <input 
-                    type="text"
-                    maxLength="50" />
-                <label>Bairro</label>
-                <input 
-                    type="text"
-                    maxLength="50" />
-                <label>UF</label>
-                <input 
-                    type="text"
-                    maxLength="2" />
-
-
-                    //navbar search
-
-                    <form class="d-flex input-group w-auto">
-                <input
-                type="search"
-                class="form-control"
-                placeholder="Type query"
-                aria-label="Search"
-                />
-                <button
-                class="btn btn-outline-primary"
-                type="button"
-                data-mdb-ripple-color="dark"
-                >
-                Pesquisar
-                </button>
-            </form>
-
-
 import { useState, useEffect } from 'react';
-import Input from './Input';
+import Input from '../src/components/Input';
 
 
 const Client = () => {
@@ -91,14 +40,17 @@ const Client = () => {
 
     const saveContent = () => {
         model = {
-            ...model,
+            name: fullNameInput,
+            cpfid: cpfIDInput,
+            cepCode: cepInput,
             address: AddressInput,
+            number: NumberInput,
             complement: ComplementInput,
             district: DistrictInput,
             city: cityInput,
             state: StateInput
         }
-        setClient(model)
+        console.log(model)
     }
 
     const fillForm = (data) => {
@@ -138,7 +90,7 @@ const Client = () => {
             if(cepJson.hasOwnProperty('erro')){
                 alert("CEP não encontrado!")
             } else {
-                setCepInput(cepCode)
+                setCepInput(cepCode);
                 fillForm(cepJson);
             }
         } else {
@@ -148,6 +100,8 @@ const Client = () => {
                 alert("CEP incorreto!");
             }
         }
+            //.then(data => setReturnedData(data));
+        //setCepInput(cepResponse[0]);
     }  
 
     return ( 
@@ -158,17 +112,17 @@ const Client = () => {
                 <Input value={cpfIDInput} placeholder="CPF" maxLength={11} onChange={setCPFIDInput}/>
                 <Input value={cepInput} placeholder="CEP" maxLength={8} onBlur={inputCEP}/>
 
-                    {/* TODO: Lógica de Aparecer Conteúdo apenas quando houver informações */}
-                    <Input value={AddressInput} placeholder="Endereço" maxLength={50}/>
-                    <Input value={ComplementInput} placeholder="Complemento" maxLength={50}/>
-                    <Input value={DistrictInput} placeholder="Bairro" maxLength={50}/>
-                    <Input value={cityInput} placeholder="Cidade" maxLength={50}/>
-                    <Input value={StateInput} placeholder="UF" maxLength={2}/>
-                    <button
+                {/* TODO: Lógica de Aparecer Conteúdo apenas quando houver informações */}
+                <Input value={AddressInput} placeholder="Endereço" maxLength={50}/>
+                <Input value={ComplementInput} placeholder="Complemento" maxLength={50}/>
+                <Input value={DistrictInput} placeholder="Bairro" maxLength={50}/>
+                <Input value={cityInput} placeholder="Cidade" maxLength={50}/>
+                <Input value={StateInput} placeholder="UF" maxLength={2}/>
+                <button disabled
                     onClick={saveContent}>
                         Salvar
                     </button>
-                    <pre>{JSON.stringify(client, null, 2)}</pre>
+                    <p>{fullNameInput}</p>
             </form>
         </div>
      );

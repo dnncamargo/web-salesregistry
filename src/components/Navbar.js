@@ -44,7 +44,7 @@ const Navbar = () => {
             </li> */}
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/Client">
-                Cliente
+              Client
               </a>
             </li>
             <li className="nav-item">
@@ -60,6 +60,11 @@ const Navbar = () => {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/Article02">
               SetState
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="/Article03">
+              UseEffect
               </a>
             </li>
           </ul>

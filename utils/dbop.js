@@ -6,17 +6,45 @@ const config = require('./dbconf'),
  * Conecta-se ao banco de dados
  * @returns object contendo Nome e CPF dos Clients
  */
-const getClients = async() => {
+const getClient = async(id) => {
     try {
         let pool = await sql.connect(config);
-        let clients = pool.request().query(
-            "SELECT fullname,cpfid FROM Clients"
-        )
-        console.log(clients);
+        let clients = await pool.request().query(
+            `SELECT nomecompleto,
+             cpf,
+             cep,
+             numero,
+             logradouro,
+             complemento,
+             localidade,
+             uf,
+             city FROM Clients WHERE id = '${id}'`
+        ) 
         return clients;
     } catch (error) {
         console.log(error);
     }
 }
 
-module.exports = { getClients }
+const insertClient = async (client) => {
+    try {
+        let pool = await sql.connect(config);
+        let clients = await pool.request().query(
+            `INSERT INTO Clients VALUES (
+                '${client.nomecompleto}', 
+                '${client.cpf}', 
+                '${client.cep}', 
+                '${client.numero}', 
+                '${client.logradouro}', 
+                '${client.complemento}', 
+                '${client.bairro}', 
+                '${client.uf}', 
+                '${client.localidade}')`
+        )
+        return clients;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = { getClient, insertClient }
