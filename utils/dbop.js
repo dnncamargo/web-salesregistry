@@ -6,19 +6,58 @@ const config = require('./dbconf'),
  * Conecta-se ao banco de dados
  * @returns object contendo Nome e CPF dos Clients
  */
-const getClients = async() => {
+/**
+ * Conecta-se ao banco de dados
+ * @returns object contendo Nome e CPF dos Clients
+ */
+const getClient = async(id) => {
     try {
         let pool = await sql.connect(config);
-        let clients = pool.request().query(
-            "SELECT fullname,cpfid FROM Clients"
-        )
-        console.log(clients);
+        let clients = await pool.request().query(
+            `SELECT nomecompleto,
+             cpf,
+             cep,
+             numero,
+             logradouro,
+             complemento,
+             bairro,
+             localidade,
+             uf,
+             email,
+             telefone,
+             nascimento
+            FROM Clients WHERE id = '${id}'`
+        ) 
         return clients;
     } catch (error) {
         console.log(error);
     }
 }
 
+const insertClient = async (client) => {
+    try {
+        let pool = await sql.connect(config);
+        let clients = await pool.request().query(
+            `INSERT INTO Clients VALUES (
+                '${client.nomecompleto}', 
+                '${client.cpf}', 
+                '${client.cep}', 
+                '${client.numero}', 
+                '${client.logradouro}', 
+                '${client.complemento}', 
+                '${client.bairro}', 
+                '${client.localidade}', 
+                '${client.uf}'),
+                '${client.email}'),
+                '${client.telefone}'),
+                '${client.nascimento}'),
+                1`
+        )
+        return clients;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const firstConfig = async () => {
     const hostname = os.hostname();
@@ -82,4 +121,4 @@ const firstConfig = async () => {
     
 }
 
-module.exports = { firstConfig, getClients }
+module.exports = { firstConfig, getClient, insertClient }
