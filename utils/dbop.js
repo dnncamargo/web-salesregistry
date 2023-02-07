@@ -5,10 +5,6 @@ const config = require('./dbconf'),
  * Conecta-se ao banco de dados
  * @returns object contendo Nome e CPF dos Clients
  */
-/**
- * Conecta-se ao banco de dados
- * @returns object contendo Nome e CPF dos Clients
- */
 const getClient = async(id) => {
     try {
         let pool = await sql.connect(config);
@@ -25,7 +21,7 @@ const getClient = async(id) => {
              email,
              telefone,
              nascimento
-            FROM Clients WHERE id = '${id}'`
+            FROM Cliente WHERE id = '${id}'`
         ) 
         return clients;
     } catch (error) {
@@ -33,11 +29,16 @@ const getClient = async(id) => {
     }
 }
 
+/**
+ * Conecta-se ao banco de dados e retorna a resposta de inserção na tabela Cliente
+ * @param {client} 
+ * @returns clients
+ */
 const insertClient = async (client) => {
     try {
         let pool = await sql.connect(config);
         let clients = await pool.request().query(
-            `INSERT INTO Clients VALUES (
+            `INSERT INTO Cliente VALUES (
                 '${client.nomecompleto}', 
                 '${client.cpf}', 
                 '${client.cep}', 
@@ -46,12 +47,11 @@ const insertClient = async (client) => {
                 '${client.complemento}', 
                 '${client.bairro}', 
                 '${client.localidade}', 
-                '${client.uf}'),
-                '${client.email}'),
-                '${client.telefone}'),
-                '${client.nascimento}'),
-                true`
-        )
+                '${client.uf}',
+                '${client.email}',
+                '${client.telefone}',
+                '${client.nascimento}',
+                1)`)
         return clients;
     } catch (error) {
         console.log(error);

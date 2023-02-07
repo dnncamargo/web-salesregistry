@@ -25,7 +25,7 @@ const client = {
     nascimento: '09/12/1985'
     }
 
-dbop.insertClient(client)
+//dbop.insertClient(client)
 
 app.post('/create', async (req, res) => {
     console.log("received from front:", req.body);
